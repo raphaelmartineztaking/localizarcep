@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Taking</title>
+<style>
+.centro {
+position:absolute;
+top: 45%;
+left: 21.5%;
+width:900px;
+height:500px;
+text-align: center;
+}
+</style>
+</head>
+	<body>
+		<marquee><img src="Tkg.png" width="285" height="65"></marquee>
+		<div class="centro">
+		<h1><b>Objetivo do dia - 21/01</b></h1>
+		<h3><i>WebServer: Apache TOMCAT</i></h3>
+		<p>CEP: <input type="text" id="cep"></p>
+		<button onClick="endereco()">Localizar CEP</button><br><br>
+		
+		Logradouro: <input type="text" id="logradouro" disabled><br><br>
+		Complemento: <input type="text" id="complemento" disabled><br><br>
+		Bairro: <input type="text" id="bairro" disabled><br><br>
+		Localidade: <input type="text" id="localidade" disabled><br><br>
+		UF: <input type="text" id="uf" disabled><br><br>
+		
+		<script language="javascript">
+		
+			function endereco(){
+				var cep = document.getElementById("cep");
+				var url = "http://viacep.com.br/ws/" + cep.value + "/json/";
+				
+				var logradouro = document.getElementById("logradouro");
+				var complemento = document.getElementById("complemento");
+				var bairro = document.getElementById("bairro");
+				var localidade = document.getElementById("localidade");
+				var uf = document.getElementById("uf");
+				
+				fetch(url, [method = 'GET'])
+					.then(response => {
+						response.json()
+							.then(data => {
+								logradouro.value = data.logradouro;
+								complemento.value = data.complemento;
+								bairro.value = data.bairro;
+								localidade.value = data.localidade;
+								uf.value = data.uf;
+							})
+					})
+					.catch(err => {
+						logradouro.value = "";
+						complemento.value = "";
+						bairro.value = "";
+						localidade.value = "";
+						uf.value = "";
+						alert("CEP não localizado")
+					})
+			}
+		
+		</script>
+		</div>
+	</body>
+</html>
